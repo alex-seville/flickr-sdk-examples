@@ -1,0 +1,29 @@
+{
+  "name": "flickr-sdk-examples",
+  "version": "1.0.0",
+  "description": "Implementation examples for the Flickr SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha */test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flickr/flickr-sdk-examples.git"
+  },
+  "author": "Flickr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flickr/flickr-sdk-examples/issues"
+  },
+  "homepage": "https://github.com/flickr/flickr-sdk-examples",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "flickr-sdk": "^3.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2",
+    "sinon": "^1.17.6",
+    "supertest": "^2.0.1"
+  }
+}
