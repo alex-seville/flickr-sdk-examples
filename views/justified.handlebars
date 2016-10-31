@@ -1,0 +1,10 @@
+
+<h1>{{title}}</h1>
+
+<div class="justified-response-container">
+	{{#each photos}}
+	<img src="https://farm{{farm}}.staticflickr.com/{{server}}/{{id}}_{{secret}}.jpg"
+	 style="top: {{layout.top}}; width: {{layout.width}};
+	 height: {{layout.height}}; left: {{layout.left}};" />
+	{{/each}}
+</div>
