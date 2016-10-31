@@ -1,12 +1,11 @@
 # flickr-sdk-examples
 Implementation examples for the Flickr SDK
 
-## ENV file
-These examples require an ENV file.  In the root of this project create a `.env` file with the following keys and values:
+## getting an API key
 
-```
-APIKEY=12345
-APISECRET=98765
-```
+These examples require an API key and secret.
 
-Replace the placehodler values with your api key and api secret.
+1. Apply for an API key here: https://www.flickr.com/services/apps/create/
+  - If you already have a registered application, you can find your API key and secret here: https://www.flickr.com/services/apps/by/me
+2. In this repository, copy `.env.example` to `.env`.
+3. Replace the placehodler values in `.env` with your API key and secret.
