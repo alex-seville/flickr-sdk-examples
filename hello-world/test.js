@@ -1,4 +1,4 @@
-var app = require('./app');
+var app = require('.');
 var request = require('supertest');
 
 describe('Hello World', function() {
