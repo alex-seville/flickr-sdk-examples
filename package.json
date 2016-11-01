@@ -19,11 +19,12 @@
   "dependencies": {
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
-    "flickr-sdk": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "flickr-sdk": "^3.0.0",
+    "justified-layout": "^2.1.0"
   },
   "devDependencies": {
     "mocha": "^3.1.2",
-    "sinon": "^1.17.6",
     "supertest": "^2.0.1"
   }
 }

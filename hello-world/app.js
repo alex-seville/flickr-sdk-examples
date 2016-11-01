@@ -1,6 +1,5 @@
 /* app set up */
-var express = require('express');
-var app = module.exports = express();
+var app = module.exports = require('../app')();
 var Flickr, flickr;
 
 /* flickr sdk set up */
