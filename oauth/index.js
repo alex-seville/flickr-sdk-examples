@@ -1,4 +1,4 @@
-var express = require('express');
+var app = module.exports = require('../app')();
 var Flickr = require('flickr-sdk');
 var oauth = require('flickr-sdk/plugins/oauth');
 
@@ -11,15 +11,17 @@ var flickr = new Flickr();
 // should DEFINITELY use a database for this!
 var session = { verified: false };
 
-// Create a new express app
-var app = express();
-
-// Environment
-require('dotenv').config();
-
 // Settings
 var consumerKey = process.env.APIKEY;
 var consumerSecret = process.env.APISECRET;
+
+// A route to clear the session information
+app.get('/logout', function (req, res) {
+	session.verified = false;
+	session.oauth_token = false;
+	session.oauth_token_secret = false;
+	res.redirect('/');
+});
 
 // If we have a "session" with a verified OAuth token, use it
 // to do something interesting on behalf of the current user.
@@ -74,12 +76,14 @@ app.get('/callback', function (req, res, next) {
 	var tokenSecret = session.oauth_token_secret;
 
 	// Verify the token with Flickr
-	oauth.verify(token, verifier, tokenSecret).then(function () {
+	oauth.verify(token, verifier, tokenSecret).then(function (response) {
 
 		// Mark our session's OAuth token as verified. This is just
 		// for demonstration and will NOT scale beyond a single
 		// process! You should DEFINITELY use a database for this!
 		session.verified = true;
+		session.oauth_token = response.body.oauth_token;
+		session.oauth_token_secret = response.body.oauth_token_secret;
 
 		// Now that we have a verified OAuth token, redirect the
 		// user back to the home route.
@@ -91,6 +95,8 @@ app.get('/callback', function (req, res, next) {
 
 });
 
-app.listen(3000, function () {
-	console.log('visit http://localhost:3000 to start the OAuth flow');
-});
+if (!module.parent) {
+	app.listen(3000, function () {
+		console.log('visit http://localhost:3000 to start the OAuth flow');
+	});
+}
