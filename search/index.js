@@ -17,21 +17,30 @@ app.get('/', function (req, res) {
 		extras: 'url_m'
 	})
 	.then(function (response) {
+
 		/* calculate justified layout geometry */
 		var geometry = justifiedLayout(response.body.photos.photo.map(function (photo) {
-			return parseInt(photo['width_m'], 10) / parseInt(photo['height_m'], 10);
+			var aspect = parseInt(photo['width_m'], 10) / parseInt(photo['height_m'], 10);
+			if (isNaN(aspect)) {
+				aspect = 1;
+			}
+			return aspect;
 		}),
 		{
 			targetRowHeight: 100,
 			containerWidth: 600
 		});
-
 		/* update photo data with display calulation */
 		response.body.photos.photo.forEach(function (photo, index) {
 			photo.layout = geometry.boxes[index];
 			photo.layout.top += 100;
-		});
 
+			photo.url = "https://farm{{farm}}.staticflickr.com/{{server}}/{{id}}_{{secret}}.jpg"
+			.replace("{{farm}}", photo.farm)
+			.replace("{{server}}", photo.server)
+			.replace("{{id}}", photo.id)
+			.replace("{{secret}}", photo.secret);
+		});
 		/* render template */
 		res.render('justified', {
 			photos: response.body.photos.photo,
