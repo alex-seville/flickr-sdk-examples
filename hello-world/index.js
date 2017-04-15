@@ -5,6 +5,11 @@ var Flickr, flickr;
 /* flickr sdk set up */
 require('dotenv').config();
 Flickr = require('flickr-sdk');
+
+if (!process.env.APIKEY) {
+	throw new Error('You need to provide a valid Flickr API key for this example');
+}
+
 flickr = new Flickr({ api_key: process.env.APIKEY });
 
 /* example route */

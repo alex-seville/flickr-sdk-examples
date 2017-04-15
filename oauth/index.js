@@ -2,9 +2,9 @@ var app = module.exports = require('../app')();
 var Flickr = require('flickr-sdk');
 var oauth = require('flickr-sdk/plugins/oauth');
 
-// Create a new Flickr instance. We don't need to provide our API
-// key here because we will be using the user's OAuth token instead.
-var flickr = new Flickr();
+if (!process.env.APIKEY || !process.env.APISECRET) {
+	throw new Error('You need to provide a valid Flickr API key and API secret for this example');
+}
 
 // Create a session store for the current user. This is just for
 // demonstration and will NOT scale beyond a single process! You
@@ -28,11 +28,16 @@ app.get('/logout', function (req, res) {
 // Otherwise, redirect to /login to start the OAuth flow.
 app.get('/', function (req, res) {
 	if (session.verified) {
+		// Create a new Flickr instance. We have all the required
+		// fields for the oauth plugin now
+		var flickr = new Flickr(oauth(consumerKey, consumerSecret, session.oauth_token, session.oauth_token_secret));
+
 		// Return the user's recent photo activity as JSON
-		flickr.activity.userPhotos()
-		.use(oauth(consumerKey, consumerSecret, session.oauth_token, session.oauth_token_secret))
+		flickr.people.getInfo({
+			user_id: session.user_id
+		})
 		.then(function (response) {
-			res.json(response.body);
+			res.send('The private mail SHA is: ' + response.body.person.mbox_sha1sum._content);
 		}, function (err) {
 			res.status(500).send(err.message);
 		});
@@ -84,6 +89,7 @@ app.get('/callback', function (req, res, next) {
 		session.verified = true;
 		session.oauth_token = response.body.oauth_token;
 		session.oauth_token_secret = response.body.oauth_token_secret;
+		session.user_id = response.body.user_nsid;
 
 		// Now that we have a verified OAuth token, redirect the
 		// user back to the home route.
