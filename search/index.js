@@ -35,11 +35,7 @@ app.get('/', function (req, res) {
 			photo.layout = geometry.boxes[index];
 			photo.layout.top += 100;
 
-			photo.url = "https://farm{{farm}}.staticflickr.com/{{server}}/{{id}}_{{secret}}.jpg"
-			.replace("{{farm}}", photo.farm)
-			.replace("{{server}}", photo.server)
-			.replace("{{id}}", photo.id)
-			.replace("{{secret}}", photo.secret);
+			photo.url = `https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
 		});
 		/* render template */
 		res.render('justified', {

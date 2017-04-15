@@ -1,6 +1,16 @@
 # flickr-sdk-examples
 Implementation examples for the Flickr SDK
 
+## setup
+
+Run `npm install` to install all dependencies.
+
+Run `npm test` to verify the dependencies were installed correct, and that all examples are working as expected.
+
+Run `node <example folder>` to start the server for the examples,
+
+i.e. `node hello-world/` will run the `hello-world` example.
+
 ## getting an API key
 
 These examples require an API key and secret.

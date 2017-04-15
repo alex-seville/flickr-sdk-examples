@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/flickr/flickr-sdk-examples",
   "dependencies": {
-    "dotenv": "^2.0.0",
+    "dotenv": "^4.0.0",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
-    "flickr-sdk": "^3.0.0",
+    "flickr-sdk": "next",
     "justified-layout": "^2.1.0"
   },
   "devDependencies": {

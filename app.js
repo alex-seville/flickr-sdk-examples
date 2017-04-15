@@ -3,9 +3,14 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 
-require('dotenv').config({
+var envFile = require('dotenv').config({
 	path: __dirname + '/.env'
 });
+
+/* warn is .env file is missing or invalid */
+if (envFile.error) {
+	console.warn('You must add a valid .env file to run examples that require authentication.');
+}
 
 /* create a new express app each time so the routes are distinct in the tests */
 function createApp () {
